@@ -1,0 +1,7 @@
+0.7
+2020.2
+May 22 2025
+00:13:55
+C:/Projects/VivadoProjects/spi_controller/spi_controller.sim/sim_1/behav/xsim/glbl.v,1741209010,verilog,,,,glbl,,uvm,,,,,,
+C:/Projects/VivadoProjects/spi_controller/spi_controller.srcs/sim_1/new/fifo_buffer_tb.sv,1763181734,systemVerilog,,,,fifo_buffer_tb,,uvm,../../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
+C:/Projects/VivadoProjects/spi_controller/spi_controller.srcs/sources_1/new/fifo_buffer.v,1763181660,verilog,,,,fifo_buffer,,uvm,../../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,

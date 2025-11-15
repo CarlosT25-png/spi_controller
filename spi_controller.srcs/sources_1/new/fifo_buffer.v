@@ -28,33 +28,35 @@ module fifo_buffer #(
     input reset_n,
     input i_write_en, i_read_en,
     input [DATA_WIDTH-1:0] i_data_in,
-    output o_is_full, o_is_empty,
-    output [DATA_WIDTH-1:0] o_data_out
-    );
+    output reg o_is_full, o_is_empty,
+    output reg [DATA_WIDTH-1:0] o_data_out
+);
 
     // How many bits we need for our pointers
-    localparam reg ADDR_WIDTH = $clog2(DEPTH);
+    localparam integer ADDR_WIDTH = $clog2(DEPTH);
 
     // pointer
-    reg [ADDR_WIDTH:0] read_ptr, write_ptr, size_cnt;
+    reg [ADDR_WIDTH-1:0] read_ptr, write_ptr;
+    reg [ADDR_WIDTH:0]   size_cnt;
+
 
     // memory
-    reg [DATA_WIDTH-1:0] memory [DEPTH-1:0];
+    reg [DATA_WIDTH-1:0] memory [0: DEPTH-1];
 
+
+    integer i;
 
     // write into memory
     always @(posedge clk) begin
         if (~reset_n) begin
-            size_cnt <= 0; // Reset size counter
             write_ptr <= 0;
-            for (int i = 0; i < DATA_WIDTH; i = i + 1) begin
+            for (i = 0; i < DEPTH; i = i + 1) begin
                 memory[i] <= 0;
-            end 
+            end
         end else begin
             if (i_write_en && ~o_is_full) begin
                 memory[write_ptr] <= i_data_in;
-                write_ptr = write_ptr + 1;
-                size_cnt <= size_cnt + 1; // add 1 to the counter
+                write_ptr <= write_ptr + 1;
             end
         end
     end
@@ -67,12 +69,24 @@ module fifo_buffer #(
         end else begin
             if (i_read_en && ~o_is_empty) begin
                 o_data_out <= memory[read_ptr];
-                read_ptr = read_ptr + 1;
-                size_cnt <= size_cnt - 1; // decrement size
-            end else
-                o_data_out = 0;
+                read_ptr <= read_ptr + 1;
+            end
         end
     end
+
+    always @(posedge clk) begin
+        if (~reset_n) begin
+            size_cnt <= 0;
+        end else begin
+            case ({i_write_en && ~o_is_full, i_read_en && ~o_is_empty})
+                2'b10: size_cnt <= size_cnt + 1; // write only
+                2'b01: size_cnt <= size_cnt - 1; // read only
+                default: size_cnt <= size_cnt; // no change or both
+            endcase
+        end
+    end
+
+
 
     // Output fifo is full or empty
     always @(*) begin
@@ -85,7 +99,7 @@ module fifo_buffer #(
             o_is_empty = 1;
         end
     end
-    
-    
-    
+
+
+
 endmodule
