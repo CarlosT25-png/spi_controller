@@ -71,7 +71,7 @@ module spi_controller_tb(
         i_request = 0;
 
 
-        #100;
+        #400;
         $finish;
     end
     

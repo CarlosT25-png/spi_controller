@@ -6,7 +6,6 @@ Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
 WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 32 for port 'o_mosi' [C:/Projects/VivadoProjects/spi_controller/spi_controller.srcs/sim_1/new/spi_controller_tb.sv:43]
-WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 4 for port 'i_divider' [C:/Projects/VivadoProjects/spi_controller/spi_controller.srcs/sources_1/new/spi_controller.v:53]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis

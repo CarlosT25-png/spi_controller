@@ -41,7 +41,8 @@ module spi_controller #(DATA_WIDTH = 32) (
 
     // serial clok
 
-    reg i_start, i_divider;
+    reg i_start;
+    reg [3:0] i_divider;
 
     serial_clock #(
         .DATA_WIDTH(DATA_WIDTH)
@@ -94,19 +95,72 @@ module spi_controller #(DATA_WIDTH = 32) (
         .o_data_out(fifo_cs_out)
     );
 
+    // cpha 1
+    always @(negedge sclk) begin
+        if(i_cpha == 1) begin
+            if (sending) begin
+                // i_start <= 0; // serial clock is already running at this point
+                o_mosi <= shift_reg[cnt];
+                case (cs_reg)
+                    2'b00 : o_cs0 <= 0;
+                    2'b01 : o_cs1 <= 0;
+                    2'b10 : o_cs2 <= 0;
+                    2'b11 : o_cs3 <= 0;
+                endcase
+
+                cnt <= cnt + 1;
+                if (cnt == DATA_WIDTH) begin
+                    sending <= 0;
+
+                end
+            end
+        end
+    end
+
+    // cpha 0
+    always @(posedge sclk) begin
+        if (i_cpha == 0) begin
+            if (sending) begin
+                // i_start <= 0; // serial clock is already running at this point
+                o_mosi <= shift_reg[cnt];
+                case (cs_reg)
+                    2'b00 : o_cs0 <= 0;
+                    2'b01 : o_cs1 <= 0;
+                    2'b10 : o_cs2 <= 0;
+                    2'b11 : o_cs3 <= 0;
+                endcase
+
+                cnt <= cnt + 1;
+                if (cnt == DATA_WIDTH) begin
+                    sending <= 0;
+
+                end
+            end
+        end
+    end
+
+
+
     // state
     reg sending;
-
+    reg [DATA_WIDTH-1:0] shift_reg;
+    reg [1:0] cs_reg;
+    reg [5:0] cnt;
+    // fifo r/w & states
     always @(posedge clk or negedge reset_n) begin
         if (~reset_n) begin
+            // serial clock
+            i_divider <= 4'd1;
+            i_start <= 0;
+            // spi
             o_cs0 <= 1;
             o_cs1 <= 1;
             o_cs2 <= 1;
             o_cs3 <= 1;
-            o_mosi <= 1;
+            o_mosi <= i_cpol;
             sending <= 0;
         end else begin
-            // write
+            // write into fifo
             if(i_request && ~fifo_data_o_is_full) begin
                 fifo_data_write_en <= 1;
                 fifo_cs_write_en <= 1;
@@ -119,41 +173,36 @@ module spi_controller #(DATA_WIDTH = 32) (
                 fifo_cs_in <= 0;
             end
 
-            // read from fifo queue
-            if(~fifo_data_o_is_empty) begin
-                $display("here");
-                fifo_data_read_en <= 1;
-                fifo_cs_read_en <= 1;
-            end else begin
-                $display("here2");
-                fifo_data_read_en <= 0;
-                fifo_cs_read_en <= 0;
-            end
-
-            // if we have some value ready from the fifo queue
-            $display("fifo data out");
-            $display(fifo_data_out);
-            if(fifo_data_out) begin
-                // TEST DUMMY: Output data 
-                $display("output");
-                $display(fifo_data_out[31]);
-                o_mosi <= fifo_data_out[31];
-
-                $display(fifo_cs_out);
-                
-                case (fifo_cs_out)
-                    2'b00 : o_cs0 <= 0;
-                    2'b01 : o_cs1 <= 0;
-                    2'b10 : o_cs2 <= 0;
-                    2'b11 : o_cs3 <= 0;
-                endcase
-            end else begin
-                o_mosi <= 1;
+            if(!sending) begin
+                o_mosi <= i_cpol; // idle state
                 o_cs0 <= 1;
                 o_cs1 <= 1;
                 o_cs2 <= 1;
                 o_cs3 <= 1;
-                o_mosi <= 1;
+
+                // read from fifo queue; if there's a value start sending
+                if(~fifo_data_o_is_empty) begin
+                    fifo_data_read_en <= 1;
+                    fifo_cs_read_en <= 1;
+                    sending <= 1;
+
+                    $display("fifo is not empty");
+                end
+            end else begin
+                fifo_data_read_en <= 0; // stop reading
+                fifo_cs_read_en <= 0;
+
+                $display("Started serial clock");
+                // start serial clock
+                i_divider <= 4'd1;
+                i_start <= 1;
+
+                // save info into the register
+                shift_reg <= fifo_data_out;
+                cs_reg <= fifo_cs_out;
+
+                // bit counter
+                cnt <= 0;
             end
         end
     end
