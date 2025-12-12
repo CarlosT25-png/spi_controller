@@ -1,21 +1,21 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: UTSA
+// Engineer: Carlos Torres Valle
 // 
 // Create Date: 11/17/2025 02:57:01 PM
-// Design Name: 
+// Design Name: SPI Controller
 // Module Name: serial_clock
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
+// Project Name: SPI Master Controller
+// Target Devices: ASIC DESIGN
+// Tool Versions: AMD VIVADO 2025.1 & Cadence INNOVUS
 // Description: 
 // 
 // Dependencies: 
 // 
 // Revision:
 // Revision 0.01 - File Created
-// Additional Comments:
+// Additional Comments: SPI master controller with up to 4 independandt slaves
 // 
 //////////////////////////////////////////////////////////////////////////////////
 

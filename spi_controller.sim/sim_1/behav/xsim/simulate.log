@@ -1,41 +1,4 @@
 Time resolution is 1 ps
 fifo is not empty
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-Started serial clock
-$finish called at time : 435 ns : File "C:/Projects/VivadoProjects/spi_controller/spi_controller.srcs/sim_1/new/spi_controller_tb.sv" Line 75
+stopped sending
+$finish called at time : 555 ns : File "C:/Projects/VivadoProjects/spi_controller/spi_controller.srcs/sim_1/new/spi_controller_tb.sv" Line 90

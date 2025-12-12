@@ -5,15 +5,16 @@ Running: C:/Xilinx/2025.1/Vivado/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 32 for port 'o_mosi' [C:/Projects/VivadoProjects/spi_controller/spi_controller.srcs/sim_1/new/spi_controller_tb.sv:43]
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 4 for port 'i_data' [C:/Projects/VivadoProjects/spi_controller/spi_controller.srcs/sim_1/new/spi_controller_tb.sv:38]
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 4 for port 'o_received_data' [C:/Projects/VivadoProjects/spi_controller/spi_controller.srcs/sim_1/new/spi_controller_tb.sv:44]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.serial_clock
-Compiling module xil_defaultlib.fifo_buffer(DEPTH=4)
+Compiling module xil_defaultlib.serial_clock(DATA_WIDTH=4)
+Compiling module xil_defaultlib.fifo_buffer(DATA_WIDTH=4,DEPTH=4...
 Compiling module xil_defaultlib.fifo_buffer(DATA_WIDTH=2,DEPTH=4...
-Compiling module xil_defaultlib.spi_controller
+Compiling module xil_defaultlib.spi_controller(DATA_WIDTH=4)
 Compiling module xil_defaultlib.spi_controller_tb
 Compiling module xil_defaultlib.glbl
 Built simulation snapshot spi_controller_tb_behav

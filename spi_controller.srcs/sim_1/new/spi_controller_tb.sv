@@ -24,12 +24,12 @@ module spi_controller_tb(
     );
 
     logic clk, reset_n;
-    logic i_miso, i_cpol, i_request, i_cpha, sclk, o_mosi, o_cs0, o_cs1, o_cs2, o_cs3;
-    logic [31:0] i_data;
+    logic i_miso, i_cpol, i_request, i_cpha, sclk, o_mosi, o_cs0, o_cs1, o_cs2, o_cs3, o_spi_full;
+    logic [4:0] i_data, o_received_data;
     logic [1:0] i_cs_selector;
 
     spi_controller #(
-        .DATA_WIDTH(32)
+        .DATA_WIDTH(4)
     ) spi_controller_instance (
         .clk(clk),
         .reset_n(reset_n),
@@ -41,10 +41,12 @@ module spi_controller_tb(
         .i_cs_selector(i_cs_selector),
         .sclk(sclk),
         .o_mosi(o_mosi),
+        .o_received_data(o_received_data),
         .o_cs0(o_cs0),
         .o_cs1(o_cs1),
         .o_cs2(o_cs2),
-        .o_cs3(o_cs3)
+        .o_cs3(o_cs3),
+        .o_spi_full(o_spi_full)
     );
 
     initial begin
@@ -65,10 +67,23 @@ module spi_controller_tb(
         reset_n = 1;
 
         #10;
-        i_data = 32'd427;
+        i_data = 4'd9;
         i_request = 1;
         #10;
         i_request = 0;
+
+        #60;
+        i_miso = 1;
+
+        #20;
+        i_miso = 0;
+
+        #20;
+        i_miso = 1;
+
+        #20;
+        i_miso = 0;
+
 
 
         #400;

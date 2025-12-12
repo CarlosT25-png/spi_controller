@@ -1,21 +1,21 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: UTSA
+// Engineer: Carlos Torres Valle
 // 
 // Create Date: 11/14/2025 09:28:30 PM
-// Design Name: 
+// Design Name: SPI Controller
 // Module Name: fifo_buffer
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
+// Project Name: SPI Master Controller
+// Target Devices: ASIC DESIGN
+// Tool Versions: AMD VIVADO 2025.1 & Cadence INNOVUS
 // Description: 
 // 
 // Dependencies: 
 // 
 // Revision:
 // Revision 0.01 - File Created
-// Additional Comments:
+// Additional Comments: 
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
