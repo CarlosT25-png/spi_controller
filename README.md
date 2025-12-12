@@ -14,7 +14,7 @@ The main goal was to create a full synthetizable Verilog code for high speed per
     * The other 2-bit buffer handles the chip select signal.
 * **Configurable Serial Clock:** The clock generator is totally configurable ; you can derive a specific SPI baud rate from the system clock (`clk`) using a clock divider, which lets you match various slave speed requirements.
 
-## 🧠 System Architecture
+## System Architecture
 
 I designed the whole thing modularly; the overall architecture is divided into three primary sub modules. This really helped with verification and scalability. 
 
