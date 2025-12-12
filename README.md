@@ -35,6 +35,12 @@ This is the core, the brains of the operation. It manages the full duplex transm
 * **SETUP:** Data is read from the FIFO, the Serial Clock starts, and the correct Chip Select line (`o_cs`) is asserted.
 * **TRANSMITTING:** Data is sent out and received on the SCLK edges, based on the CPHA input. Once finished, it returns to IDLE.
 
+## **Behavioral Simulation**
+
+The SPI Master controller was tested using AMD Vivado and creating a testbench configuring the device for 4-bit data trasmission instead of 32-bit.
+
+![Waveform](Waveform.png)
+
 ## Synthesis Results & Optimization
 
 I ran two synthesis analyses for comparison, this helped show the trade-offs between speed and power. The synthesis was performed using Cadence RTL Compiler targeting the TSMC 180 nm library.
@@ -54,6 +60,9 @@ Since most SPI peripherals only need about 10–50 MHz, the final optimized vers
 
 ## **Physical Layout**
 
-Here is where the synthesized layout goes!
+This is the layout generated using Cadence Innovus!
+![Layout SPI MASTER CONTROLLER](layout.png)
 
-**layout**
+
+## **Additional Information**
+Final Report in IEEE format: [PDF Report](SPI_Module.pdf)
